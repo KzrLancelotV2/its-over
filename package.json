@@ -1,0 +1,11 @@
+{
+  "name": "its-over",
+  "version": "1.4.0",
+  "private": true,
+  "description": "A browser platformer about courage, daydreams, and heartbreak, written in JavaScript, HTML and CSS.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "check": "node scripts/check.mjs"
+  }
+}

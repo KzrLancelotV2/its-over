@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#121321">
+<meta name="description" content="it may be over now, but for a brief moment in time, we were so back">
+<meta name="robots" content="noindex,nofollow">
+<meta property="og:title" content="Its over">
+<meta property="og:description" content="it may be over now, but for a brief moment in time, we were so back">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<title>Its over</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect fill='%23f3c4cd' width='64' height='64' rx='18'/%3E%3Cpath d='M32 48L14 30C1 13 27 7 32 23C38 7 63 14 50 30Z' fill='%23904f68'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css?v=difficulty-25">
+</head>
+<body>
+<div class="app">
+ <header class="topbar">
+  <div class="brand"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="3" y="8" width="26" height="19" rx="4" stroke="#9a6b86" stroke-width="1.5"/><path d="m4 10 12 9 12-9M4 25l8-8m16 8-8-8" stroke="#9a6b86" stroke-width="1.5"/><path d="M16 4c-5-5-8 3 0 6 8-3 5-11 0-6" fill="#bd738e"/></svg><span>Its over</span></div>
+  <div class="top-actions"><label class="difficulty-setting">Difficulty<select id="difficulty" title="Choose before starting a run"><option value="easy">Easy · 3 ♥</option><option value="hard">Hard · 1 ♥</option></select></label><span class="dedication">PEPE → HER <span>♡</span></span><button class="sound" id="sound" aria-pressed="false" aria-label="Turn music on"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 8h3l4-4v12l-4-4H3V8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path id="sound-waves" d="m14 7 5 6m0-6-5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span id="sound-label">Sound off</span></button></div>
+ </header>
+ <main class="stage" id="stage">
+  <canvas id="game" aria-label="A three-chapter platform adventure through rooftops, a garden and a dark jungle ending at a wooden cabin. Move with arrow keys or A and D. Jump with space, up arrow, or W. You can jump twice. Shift to dash. Land on rivals to stomp them. Touch controls are available on phones."></canvas>
+  <section class="intro rejected-intro" id="intro" aria-labelledby="title">
+   <img class="title-art" src="cover.png?v=difficulty-25" alt="The skull of knight Pepe rests in weathered armor, an arrow in his chest, while a frog princess in a pink dress looks away from her castle balcony." fetchpriority="high">
+   <div class="title-shade"></div>
+   <div class="intro-copy"><h1 id="title">Its over</h1><p class="intro-description">it may be over now, but for a brief moment in time, we were so back</p>
+    <div class="mode-choices"><button class="mode-choice" id="start"><span class="mode-index">01</span><span><strong>Story Mode</strong><small>The journey, the dream, the cabin.</small></span><span aria-hidden="true">↗</span></button><button class="mode-choice" id="level-menu"><span class="mode-index">02</span><span><strong>Level Select</strong><small>Jump into any chapter.</small></span><span aria-hidden="true">↗</span></button><button class="mode-choice" id="endless-menu"><span class="mode-index">03</span><span><strong>Endless Mode</strong><small>Choose your character. Chase your best.</small></span><span aria-hidden="true">↗</span></button></div>
+    <div class="tiny-note">MOVE · DOUBLE JUMP · DASH</div>
+   </div>
+  </section>
+  <section class="mode-dialog" id="level-select" role="dialog" aria-modal="true" aria-labelledby="level-select-title" hidden><div class="mode-panel level-panel">
+   <span class="menu-kicker">LEVEL SELECT</span><h2 id="level-select-title">Pick a chapter.</h2><p class="menu-subtitle">Three chapters. Start wherever you like.</p>
+   <div class="level-options">
+    <button class="level-choice" id="select-level-1"><span class="level-number">01</span><span><strong>City Lights</strong><small>The rooftops. A little courage.</small></span><span class="level-state" id="level-state-1">PLAY ↗</span></button>
+    <button class="level-choice" id="select-level-2"><span class="level-number">02</span><span><strong>The Garden</strong><small id="level-note-2">The garden, the geese, the diner.</small></span><span class="level-state" id="level-state-2">PLAY ↗</span></button>
+    <button class="level-choice" id="select-level-3"><span class="level-number">03</span><span><strong>Awake</strong><small id="level-note-3">The long jungle route to the wooden cabin.</small></span><span class="level-state" id="level-state-3">PLAY ↗</span></button>
+   </div><p class="level-save-note">All chapters are ready to play.</p><button class="menu-back" id="level-back">Back to modes</button>
+  </div></section>
+  <section class="mode-dialog" id="character-select" role="dialog" aria-modal="true" aria-labelledby="character-title" hidden><div class="mode-panel">
+   <span class="menu-kicker">ENDLESS MODE</span><h2 id="character-title">Where to next?</h2><p class="menu-subtitle">Pick your world. Pick your Pepe.</p>
+   <div class="endless-world-options" role="group" aria-label="Endless world">
+    <button class="endless-world city-world" id="endless-world-city" aria-pressed="true"><span aria-hidden="true">01</span><strong>City</strong></button>
+    <button class="endless-world garden-world" id="endless-world-garden" aria-pressed="false"><span aria-hidden="true">02</span><strong>Garden</strong></button>
+    <button class="endless-world jungle-world" id="endless-world-jungle" aria-pressed="false"><span aria-hidden="true">03</span><strong>Jungle</strong></button>
+   </div><p id="endless-world-hint">Rooftops, rivals and neon nights.</p>
+   <div class="character-options"><button class="character-choice" id="choose-pepe" aria-pressed="true"><img src="pepe-run.png" alt=""><strong>Pepe</strong></button><button class="character-choice" id="choose-pink-pepe" aria-pressed="false"><span class="pink-pepe-portrait" aria-hidden="true"></span><strong>Pink Pepe</strong></button></div>
+   <p id="character-caption">Pepe · still going.</p><p class="menu-kicker" id="select-best">PERSONAL BEST · 0</p>
+   <button class="primary menu-primary" id="endless-start">START RUN ↗</button><button class="menu-back" id="character-back">Back to modes</button>
+  </div></section>
+  <section class="mode-dialog" id="run-over" role="dialog" aria-modal="true" aria-labelledby="run-title" hidden><div class="mode-panel">
+   <span class="menu-kicker">ENDLESS MODE</span><h2 id="run-title">Run over.</h2><p class="menu-subtitle" id="run-message">There’s always another run.</p>
+   <div class="run-results"><div><span>SCORE</span><strong id="run-score">0</strong></div><div><span>PERSONAL BEST</span><strong id="run-best">0</strong></div></div>
+   <button class="primary menu-primary" id="run-retry">ONE MORE RUN ↗</button><button class="menu-back" id="run-character">Change world or character</button><button class="menu-back" id="run-menu">Main menu</button>
+  </div></section>
+  <div class="hud" id="hud" hidden>
+   <div class="chapter" id="chapter"><small>LEVEL 1 / THE BUTTERFLIES</small>A little nervous.</div>
+   <div class="status-hud"><div class="jungle-cargo" id="jungle-cargo" aria-label="Cabin supplies" hidden><span id="cargo-0">○ Chair</span><span id="cargo-1">○ Rope</span></div><div class="endless-stats" id="endless-stats" hidden><span>SCORE <b id="endless-score">0</b></span><span>BEST <b id="endless-best">0</b></span></div><div class="health" id="health" aria-label="3 hearts remaining">♥ ♥ ♥</div><div class="keepsakes" aria-label="Keepsakes collected">
+    <span class="keepsake" id="keepsake-0" role="img" aria-label="Flower: not collected"><svg viewBox="0 0 32 32" fill="none"><path d="M16 18v12m0-6c-7 1-9-4-8-5 4-1 7 2 8 5" stroke="#76916b" stroke-width="2"/><path d="M16 6c-7-9-13 4-6 7-8 5 2 13 6 6 5 7 14-1 6-6 8-3 1-16-6-7" fill="#cb7f9b"/><circle cx="16" cy="13" r="3.5" fill="#f9df9f"/></svg></span>
+    <span class="keepsake" id="keepsake-1" role="img" aria-label="Courage: not collected"><svg viewBox="0 0 32 32"><path d="m16 3 4 8 9 2-6.5 6.5L24 29l-8-4.5L8 29l1.5-9.5L3 13l9-2Z" fill="#d4a254" stroke="#b28651" stroke-width="1.3"/></svg></span>
+    <span class="keepsake" id="keepsake-2" role="img" aria-label="Letter: not collected"><svg viewBox="0 0 32 32" fill="none"><rect x="3" y="7" width="26" height="19" rx="3" fill="#fff6e9" stroke="#b57b95" stroke-width="1.5"/><path d="m4 9 12 10L28 9" stroke="#b57b95" stroke-width="1.5"/><path d="M16 17c-5-5-8 3 0 6 8-3 5-11 0-6" fill="#c57591"/></svg></span>
+   </div></div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <aside class="quote-card" id="quote-card" role="status" aria-live="polite" aria-atomic="true" hidden>
+   <span class="quote-number" id="quote-number" hidden></span>
+   <blockquote id="quote-text"></blockquote>
+   <div class="quote-credit" id="quote-credit"><strong id="quote-author"></strong><cite id="quote-work"></cite></div>
+  </aside>
+  <div class="play-tools" id="play-tools" hidden>
+   <div class="key-help"><kbd>←</kbd><kbd>→</kbd><span>move</span><kbd>space</kbd><span>double jump</span><kbd>shift</kbd><span>dash</span></div>
+   <div class="touch-controls" aria-label="Move"><button id="left" aria-label="Move left">←</button><button id="right" aria-label="Move right">→</button></div>
+   <div class="right-tools"><div class="touch-controls"><button class="dash" id="dash" aria-label="Dash">Dash ⚡</button><button class="jump" id="jump" aria-label="Jump, press again to double jump">Jump ↑</button></div><button class="text-button" id="pause" aria-label="Pause game">Ⅱ</button></div>
+  </div>
+  <div class="paused" id="paused" hidden><div><h2>TIME OUT.</h2><p id="pause-copy">Pepe is taking five.</p><button class="primary" id="resume">BACK IN ↗</button><button class="menu-back" id="pause-menu">Main menu</button></div></div>
+  <section class="letter-overlay" id="letter-overlay" hidden aria-label="A question for her">
+   <div class="letter" id="letter-card" role="dialog" aria-modal="true" aria-labelledby="letter-title" tabindex="-1">
+    <div id="ask-view">
+     <div class="ticket-header"><div><span class="ticket-kicker">ONE QUESTION</span><strong>For her.</strong></div><img class="ticket-pepe" src="pepe-run.png" alt="Pepe, out of breath"></div>
+     <p class="ticket-number">DELIVERED BY PEPE <span>01 / 03</span></p>
+     <h2 id="letter-title">I could’ve just<br>said hi.</h2>
+     <p class="note-intro">Apparently I chose this.</p>
+     <p class="question">Want to go out sometime?</p>
+     <div class="note-actions"><button class="primary" id="yes">Yeah, okay <span aria-hidden="true">↗</span></button><button class="secondary" id="no">No thanks</button></div>
+     <p class="note-foot">Somewhere with fewer obstacles.</p>
+    </div>
+    <div id="yes-view" hidden>
+     <div class="ticket-header"><div><span class="ticket-kicker">CUPID’S DINER</span><strong>Order complete.</strong></div><img class="ticket-pepe" src="pepe-run.png" alt="Pepe has arrived"></div>
+     <p class="ticket-number">TABLE 02 <span>02 / 03</span></p>
+     <h2 id="yes-title">Finally. A chair.</h2>
+     <div class="receipt-lines" aria-label="The journey"><div><span>Route taken</span><span>the worst one</span></div><div><span>Pepe</span><span>still in one piece</span></div></div>
+     <p class="plan-prompt">So, what sounds good?</p>
+     <div class="date-options" role="group" aria-label="Choose a date idea">
+      <button class="date-option" data-date="drinks" aria-pressed="true"><span class="option-number" aria-hidden="true">01</span><span class="option-label">Coffee or tea</span><span class="option-mark" aria-hidden="true">✓</span></button>
+      <button class="date-option" data-date="park" aria-pressed="false"><span class="option-number" aria-hidden="true">02</span><span class="option-label">A walk in the park</span><span class="option-mark" aria-hidden="true">✓</span></button>
+      <button class="date-option" data-date="surprise" aria-pressed="false"><span class="option-number" aria-hidden="true">03</span><span class="option-label">You pick</span><span class="option-mark" aria-hidden="true">✓</span></button>
+     </div>
+     <div class="reply-draft"><span class="ticket-kicker">YOUR MESSAGE</span><p class="reply-text" id="reply-text">Coffee or tea sounds good. When are you free?</p></div>
+     <div class="reply-actions"><button class="primary" id="copy-reply">Copy message <span aria-hidden="true">↗</span></button><button class="secondary" id="share-reply" hidden>Share</button></div>
+     <p class="small" id="reply-status" aria-live="polite">Send it to me in chat. I can’t see what you pick here.</p>
+     <button class="primary diner-next" id="diner-next">Stay for dessert ↗</button>
+     <button class="replay" id="replay-yes">Make Pepe do it again</button>
+    </div>
+    <div id="no-view" hidden><div class="ticket-header"><div><span class="ticket-kicker">MESSAGE RECEIVED</span><strong>All good.</strong></div></div><h2 id="no-title">No worries.</h2><p>Thanks for playing. Pepe needed the exercise anyway.</p><button class="secondary" id="back-letter">Back</button><button class="replay" id="replay-no">Play again</button></div>
+   </div>
+   <button class="letter-menu menu-back" id="letter-menu">Main menu</button>
+  </section>
+  <section class="wake-scene" id="wake-scene" role="status" aria-live="polite" hidden><h2 id="wake-title">…</h2><p id="wake-copy"></p></section>
+  <aside class="cabin-thought" id="cabin-thought" role="status" hidden><small>PEPE, TO HIMSELF</small><p>It’s over, bro.</p></aside>
+  <section class="cabin-ending" id="cabin-ending" role="dialog" aria-modal="true" aria-labelledby="cabin-title" hidden><span class="menu-kicker">THE CABIN / 03</span><h2 id="cabin-title">Some quiet, finally.</h2><p>Lights off. Rain outside. Done for tonight.</p><div><button class="menu-back" id="cabin-menu">Main menu</button><button class="menu-back" id="cabin-replay">Play the story again</button></div></section>
+  <div class="sr-only" id="announcement" aria-live="polite"></div>
+ </main>
+ <footer class="footer"><span>A SIDE QUEST FOR <span class="footer-heart">HER ♡</span></span><span class="footer-right" id="footer-right">A STORY. OR ONE MORE RUN.</span></footer>
+</div>
+<audio id="soundtrack" src="rooftop-hops.mp3" preload="metadata" loop></audio>
+<audio id="jungle-intro-sound" src="jungle-intro.mp3" preload="auto"></audio>
+<audio id="jungle-soundtrack" src="jungle-theme.mp3" preload="auto" loop></audio>
+<audio id="theme-soundtrack" src="good-or-dont-be.m4a" preload="auto" loop></audio>
+<script src="game.js?v=difficulty-25"></script>
+</body>
+</html>

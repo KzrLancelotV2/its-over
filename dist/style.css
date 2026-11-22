@@ -321,3 +321,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 .difficulty-setting select:focus-visible{outline:3px solid #c4e97a;outline-offset:2px}.difficulty-setting select:disabled{opacity:.65;cursor:default}
 @media(max-width:700px){.top-actions{gap:8px}.difficulty-setting{font-size:0;gap:0}.difficulty-setting select{max-width:106px;font-size:11px}.sound{padding:8px}.brand{gap:5px;letter-spacing:0}}
 @media(max-width:360px){.top-actions .sound span{display:none}.top-actions .sound{min-height:36px}.topbar{gap:6px}}
+#board-dialog{background:#fff5e5;color:#262138;border:2px solid #453344;border-radius:12px;padding:20px;width:min(420px,92vw);max-height:82dvh;overflow:auto;margin:auto;font:16px/1.45 system-ui}
+#board-dialog::backdrop{background:#111321bf}#board-dialog h2,#board-dialog h3{color:#49203c;margin:.45em 0}
+#board-dialog input,#board-dialog select,#board-dialog button,.board-open{font:inherit;color:#322239;background:#fff9f2;border:1px solid #815969;border-radius:6px;padding:7px 10px}
+.board-open{display:block;margin:5px auto;cursor:pointer;font-size:14px;font-weight:bold}#board-dialog button{cursor:pointer}#board-dialog label{display:block;margin-bottom:8px}#board-form input{display:block;width:100%}.board-close{float:right}.board-fields{display:flex;gap:10px}.board-fields label{flex:1}.board-fields select{display:block;width:100%}#board-secret{overflow-wrap:anywhere;background:#ffe5a7;padding:10px;user-select:all}#board-list li,#board-recent li{font-variant-numeric:tabular-nums;margin:3px 0}
+#character-select .mode-panel,#run-over .mode-panel{max-height:96%;overflow-y:auto}#record-status{font-size:14px}

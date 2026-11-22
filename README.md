@@ -25,7 +25,19 @@ Three chapters: **City Lights**, **The Garden**, and **Awake**. The city is abou
 - **HTML audio** plays the included soundtrack; the **Web Audio API** makes additional sound effects.
 - **Node.js** runs the optional local development server and automated gameplay checks. Players do not need Node.js or an installation.
 
-There are no npm dependencies, compilation steps, accounts, or backend services. The files in `dist/` are the editable game source, despite the folder name.
+The platformer runs without npm dependencies or a build step. Ranked Endless runs use an optional Python and SQLite service. The files in `dist/` are the editable game source, despite the folder name.
+
+## Global Endless rankings
+
+Open **Endless Mode → Global leaderboard**. Choose a public player ID and save the generated private login code. You can use that pair to sign in on another device. Guest runs still count toward the device best. Sign in before starting a run to post its final score. Each world and difficulty has its own top 20. Your account also shows your ten latest finishes on the selected board.
+
+For local play with accounts, start the included service from the repository root:
+
+```sh
+python server/leaderboard.py
+```
+
+Open http://127.0.0.1:4173. The service stores accounts and completed runs in `server/records.sqlite3`. Set `BOARD_DB` to a persistent private file when hosting and back it up. For live ranked play, serve the game and `/api/` on one HTTPS origin. Bind the service to loopback behind a trusted reverse proxy that preserves Host and sets X-Forwarded-Proto to https. Plain static hosting supports guest play. Scores originate in the browser and receive basic elapsed-time checks. This is a casual leaderboard.
 
 ## Run locally
 
@@ -87,9 +99,9 @@ They cover the three story routes, procedural route generation, progression gate
 
 ## Publish a playable version
 
-Upload **the contents of `dist/`** to a static web host. `index.html` must sit at the site's root, alongside the images, scripts, stylesheet, and audio files. No server-side application or database is needed. See the [publishing steps](docs/CUSTOMIZATION.md#8-publish-your-version).
+Upload **the contents of `dist/`** to a static web host. `index.html` must sit at the site's root, alongside the images, scripts, stylesheet, and audio files. For shared rankings, deploy the Python service described above. See the [publishing steps](docs/CUSTOMIZATION.md#8-publish-your-version).
 
-Difficulty and best scores are saved in the player's browser. Invitation choices are shared only when the player explicitly copies or shares an answer. There are no analytics or automatic reports to the sender.
+Difficulty and local best scores are saved in the player's browser. Signed-in Endless finishes store the public handle, world, difficulty, score and time on the server. Invitation choices are shared only when the player explicitly copies or shares an answer. There are no analytics or automatic reports to the sender.
 
 ## License and assets
 

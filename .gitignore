@@ -5,3 +5,4 @@ node_modules/
 Thumbs.db
 *.zip
 _private/
+server/*.sqlite3*

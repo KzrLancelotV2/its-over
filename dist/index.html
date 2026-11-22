@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary">
 <title>Its over</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect fill='%23f3c4cd' width='64' height='64' rx='18'/%3E%3Cpath d='M32 48L14 30C1 13 27 7 32 23C38 7 63 14 50 30Z' fill='%23904f68'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css?v=difficulty-25">
+<link rel="stylesheet" href="style.css?v=boards-26">
 </head>
 <body>
 <div class="app">
@@ -23,7 +23,7 @@
  <main class="stage" id="stage">
   <canvas id="game" aria-label="A three-chapter platform adventure through rooftops, a garden and a dark jungle ending at a wooden cabin. Move with arrow keys or A and D. Jump with space, up arrow, or W. You can jump twice. Shift to dash. Land on rivals to stomp them. Touch controls are available on phones."></canvas>
   <section class="intro rejected-intro" id="intro" aria-labelledby="title">
-   <img class="title-art" src="cover.png?v=difficulty-25" alt="The skull of knight Pepe rests in weathered armor, an arrow in his chest, while a frog princess in a pink dress looks away from her castle balcony." fetchpriority="high">
+   <img class="title-art" src="cover.png?v=boards-26" alt="The skull of knight Pepe rests in weathered armor, an arrow in his chest, while a frog princess in a pink dress looks away from her castle balcony." fetchpriority="high">
    <div class="title-shade"></div>
    <div class="intro-copy"><h1 id="title">Its over</h1><p class="intro-description">it may be over now, but for a brief moment in time, we were so back</p>
     <div class="mode-choices"><button class="mode-choice" id="start"><span class="mode-index">01</span><span><strong>Story Mode</strong><small>The journey, the dream, the cabin.</small></span><span aria-hidden="true">↗</span></button><button class="mode-choice" id="level-menu"><span class="mode-index">02</span><span><strong>Level Select</strong><small>Jump into any chapter.</small></span><span aria-hidden="true">↗</span></button><button class="mode-choice" id="endless-menu"><span class="mode-index">03</span><span><strong>Endless Mode</strong><small>Choose your character. Chase your best.</small></span><span aria-hidden="true">↗</span></button></div>
@@ -47,12 +47,12 @@
    </div><p id="endless-world-hint">Rooftops, rivals and neon nights.</p>
    <div class="character-options"><button class="character-choice" id="choose-pepe" aria-pressed="true"><img src="pepe-run.png" alt=""><strong>Pepe</strong></button><button class="character-choice" id="choose-pink-pepe" aria-pressed="false"><span class="pink-pepe-portrait" aria-hidden="true"></span><strong>Pink Pepe</strong></button></div>
    <p id="character-caption">Pepe · still going.</p><p class="menu-kicker" id="select-best">PERSONAL BEST · 0</p>
-   <button class="primary menu-primary" id="endless-start">START RUN ↗</button><button class="menu-back" id="character-back">Back to modes</button>
+   <button type="button" class="board-open">Global leaderboard</button><button class="primary menu-primary" id="endless-start">START RUN ↗</button><button class="menu-back" id="character-back">Back to modes</button>
   </div></section>
   <section class="mode-dialog" id="run-over" role="dialog" aria-modal="true" aria-labelledby="run-title" hidden><div class="mode-panel">
    <span class="menu-kicker">ENDLESS MODE</span><h2 id="run-title">Run over.</h2><p class="menu-subtitle" id="run-message">There’s always another run.</p>
-   <div class="run-results"><div><span>SCORE</span><strong id="run-score">0</strong></div><div><span>PERSONAL BEST</span><strong id="run-best">0</strong></div></div>
-   <button class="primary menu-primary" id="run-retry">ONE MORE RUN ↗</button><button class="menu-back" id="run-character">Change world or character</button><button class="menu-back" id="run-menu">Main menu</button>
+   <p id="record-status" role="status"></p><div class="run-results"><div><span>SCORE</span><strong id="run-score">0</strong></div><div><span>PERSONAL BEST</span><strong id="run-best">0</strong></div></div>
+   <button type="button" class="board-open">Global leaderboard</button><button class="primary menu-primary" id="run-retry">ONE MORE RUN ↗</button><button class="menu-back" id="run-character">Change world or character</button><button class="menu-back" id="run-menu">Main menu</button>
   </div></section>
   <div class="hud" id="hud" hidden>
    <div class="chapter" id="chapter"><small>LEVEL 1 / THE BUTTERFLIES</small>A little nervous.</div>
@@ -110,13 +110,25 @@
   <aside class="cabin-thought" id="cabin-thought" role="status" hidden><small>PEPE, TO HIMSELF</small><p>It’s over, bro.</p></aside>
   <section class="cabin-ending" id="cabin-ending" role="dialog" aria-modal="true" aria-labelledby="cabin-title" hidden><span class="menu-kicker">THE CABIN / 03</span><h2 id="cabin-title">Some quiet, finally.</h2><p>Lights off. Rain outside. Done for tonight.</p><div><button class="menu-back" id="cabin-menu">Main menu</button><button class="menu-back" id="cabin-replay">Play the story again</button></div></section>
   <div class="sr-only" id="announcement" aria-live="polite"></div>
- </main>
+ <dialog id="board-dialog" aria-labelledby="board-title">
+ <form method="dialog"><button class="board-close" aria-label="Close leaderboard">Close ×</button></form>
+ <h2 id="board-title">Global leaderboard</h2>
+ <div class="board-fields"><label>World <select id="board-world"><option value="city">City</option><option value="garden">Garden</option><option value="jungle">Jungle</option></select></label>
+ <label>Difficulty <select id="board-mode"><option value="easy">Easy</option><option value="hard">Hard</option></select></label></div>
+ <p id="board-message" role="status"></p><ol id="board-list"></ol>
+ <section id="board-account"><h3>Player account</h3><p>Create a public ID to record your next run. Save your private login code to play on another device.</p>
+ <form id="board-form"><label>Player ID <input id="board-name" autocomplete="username" required pattern="[a-zA-Z0-9_]{3,20}" maxlength="20" placeholder="3–20 letters, digits or _"></label>
+ <label>Private code for returning players <input id="board-code" type="password" maxlength="64" autocomplete="current-password"></label>
+ <button value="register">Create ID</button> <button value="login">Sign in</button></form></section>
+ <p id="board-secret" hidden></p><div id="board-profile" hidden><strong id="board-player"></strong> <button id="board-logout">Sign out</button><h3>Your last 10 runs</h3><ul id="board-recent"></ul></div>
+ </dialog></main>
  <footer class="footer"><span>A SIDE QUEST FOR <span class="footer-heart">HER ♡</span></span><span class="footer-right" id="footer-right">A STORY. OR ONE MORE RUN.</span></footer>
 </div>
 <audio id="soundtrack" src="rooftop-hops.mp3" preload="metadata" loop></audio>
 <audio id="jungle-intro-sound" src="jungle-intro.mp3" preload="auto"></audio>
 <audio id="jungle-soundtrack" src="jungle-theme.mp3" preload="auto" loop></audio>
 <audio id="theme-soundtrack" src="good-or-dont-be.m4a" preload="auto" loop></audio>
-<script src="game.js?v=difficulty-25"></script>
+<script src="leaderboard.js?v=1"></script>
+<script src="game.js?v=boards-26"></script>
 </body>
 </html>

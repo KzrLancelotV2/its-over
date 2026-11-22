@@ -697,7 +697,7 @@ let endlessWorld='city',endlessShots=[],endlessDrops=[],endlessDropNext=2.5;
 const endlessWorlds={city:{name:'City Lights',hint:'Rooftops, rivals and neon nights.'},garden:{name:'The Garden',hint:'Charging geese. Gnomes with terrible aim.'},jungle:{name:'The Jungle',hint:'Bats above. Watch the incoming warnings.'}};
 function endlessBestKey(){const key=endlessWorld==='city'?'rejected-endless-best':'its-over-endless-best-'+endlessWorld;return key+(difficulty==='hard'?'-hard':'')}
 function selectEndlessWorld(world){
- endlessWorld=Object.hasOwn(endlessWorlds,world)?world:'city';endlessBest=0;
+ endlessWorld=Object.hasOwn(endlessWorlds,world)?world:'city';window.endlessBoard?.select(endlessWorld,difficulty);endlessBest=0;
  try{const saved=Number(localStorage.getItem(endlessBestKey()));if(Number.isFinite(saved)&&saved>0)endlessBest=Math.floor(saved)}catch{}
  for(const key of Object.keys(endlessWorlds))$('endless-world-'+key).setAttribute('aria-pressed',String(key===endlessWorld));
  $('endless-world-hint').textContent=endlessWorlds[endlessWorld].hint;
@@ -753,7 +753,7 @@ function extendEndless(){
  endlessStars=endlessStars.filter(s=>!s.got&&s.x>=camera-450);
 }
 function startEndless(){
- mainMenu();mode='endless';stage.classList.add('endless');if(endlessWorld!=='city')stage.classList.add(endlessWorld);$('intro').hidden=true;
+ mainMenu();window.endlessBoard?.start(endlessWorld,difficulty);mode='endless';stage.classList.add('endless');if(endlessWorld!=='city')stage.classList.add(endlessWorld);$('intro').hidden=true;
  $('hud').hidden=false;$('play-tools').hidden=false;$('endless-stats').hidden=false;$('dash').hidden=false;
  endlessSeed=Math.floor(Math.random()*100000);endlessNext=0;endlessFarthest=80;endlessBonus=0;endlessScore=0;endlessHudScore=-1;
  endlessShots=[];endlessDrops=Array.from({length:8},()=>({state:'idle'}));endlessDropNext=2.5;
@@ -772,6 +772,7 @@ function finishEndless(){
  if(mode!=='endless')return;
  updateEndlessScore();const record=endlessScore>endlessBest;endlessBest=Math.max(endlessBest,endlessScore);
  try{localStorage.setItem(endlessBestKey(),String(endlessBest))}catch{}
+ window.endlessBoard?.finish(endlessScore);
  mode='runover';paused=false;left=right=jumpQueued=dashQueued=false;
  $('hud').hidden=true;$('play-tools').hidden=true;$('paused').hidden=true;$('run-over').hidden=false;
  $('run-score').textContent=String(endlessScore);$('run-best').textContent=String(endlessBest);
@@ -1177,6 +1178,7 @@ $('copy-reply').addEventListener('click',async()=>{try{await navigator.clipboard
 if(navigator.share){$('share-reply').hidden=false;$('share-reply').addEventListener('click',async()=>{try{await navigator.share({text:replies[selectedDate]})}catch(e){if(e.name!=='AbortError')$('reply-status').textContent='Use “Copy message” and paste it into our chat.'}})}
 $('start').addEventListener('click',start);$('yes').addEventListener('click',yes);$('no').addEventListener('click',()=>{accepted=false;showLetterView('no')});$('back-letter').addEventListener('click',()=>showLetterView('ask'));$('replay-yes').addEventListener('click',start);$('replay-no').addEventListener('click',start);$('pause').addEventListener('click',()=>togglePause());$('resume').addEventListener('click',()=>togglePause(false));
 document.addEventListener('keydown',e=>{
+ if($('board-dialog').open)return;
  const modal=!$('level-select').hidden?$('level-select'):!$('cabin-ending').hidden?$('cabin-ending'):!$('character-select').hidden?$('character-select'):!$('run-over').hidden?$('run-over'):paused?$('paused'):(mode==='letter'||mode==='dinner')?$('letter-overlay'):null;
  if(e.code==='Escape'&&(!$('character-select').hidden||!$('level-select').hidden)){e.preventDefault();mainMenu();return}
  if(modal&&e.key==='Tab'){const buttons=[...modal.querySelectorAll('button')].filter(b=>b.offsetParent!==null);const first=buttons[0],last=buttons.at(-1);if(first&&e.shiftKey&&(document.activeElement===first||!buttons.includes(document.activeElement))){e.preventDefault();last.focus()}else if(first&&!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}return}

@@ -105,7 +105,7 @@ class BoardMixin:
                 elif self.command == "POST" and action in ("register","login"):
                     limited(client)
                     handle = data.get("name")
-                    require(isinstance(handle,str) and re.fullmatch(r"[a-zA-Z0-9_]{3,20}",handle),400,"Use 3â€“20 letters, numbers or underscores.")
+                    require(isinstance(handle,str) and re.fullmatch(r"[a-zA-Z0-9_]{3,20}",handle),400,"Use 3 to 20 letters, numbers or underscores.")
                     result = {}
                     if action == "register":
                         secret = secrets.token_urlsafe(18)
